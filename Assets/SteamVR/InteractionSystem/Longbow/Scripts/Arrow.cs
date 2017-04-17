@@ -83,7 +83,7 @@ namespace Valve.VR.InteractionSystem
 			{
 				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject && hit.collider != Player.instance.headCollider )
 				{
-					Destroy( gameObject );
+					// Destroy( gameObject );
 					return;
 				}
 			}
@@ -94,7 +94,7 @@ namespace Valve.VR.InteractionSystem
 			prevHeadPosition = arrowHeadRB.transform.position;
 			prevVelocity = GetComponent<Rigidbody>().velocity;
 
-			Destroy( gameObject, 30 );
+			//Destroy( gameObject, 30 );
 		}
 
 
@@ -256,7 +256,7 @@ namespace Valve.VR.InteractionSystem
 		{
 			if ( scaleParentObject != null )
 			{
-				Destroy( scaleParentObject );
+				// Destroy( scaleParentObject );
 			}
 		}
 	}
