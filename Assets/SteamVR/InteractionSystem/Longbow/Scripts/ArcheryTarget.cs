@@ -26,11 +26,12 @@ namespace Valve.VR.InteractionSystem
 
 		private bool targetEnabled = true;
 
-
-		//-------------------------------------------------
-		private void ApplyDamage()
+        //-------------------------------------------------
+        private void ApplyDamage()
 		{
+            // Hit Point++;
 			OnDamageTaken();
+            Debug.Log("ApplyDamage Occured");
 		}
 
 
@@ -40,11 +41,20 @@ namespace Valve.VR.InteractionSystem
 			OnDamageTaken();
 		}
 
+        //-------------------------------------------------
+        private void DestroyTarget()
+        {
+            Destroy(gameObject);
+        }
+
 
 		//-------------------------------------------------
 		private void OnDamageTaken()
 		{
-			if ( targetEnabled )
+            // Score Point Calculation needed
+            Debug.Log("OnDamageTaken Occured");
+
+            if ( targetEnabled )
 			{
 				onTakeDamage.Invoke();
 				StartCoroutine( this.FallDown() );
@@ -54,13 +64,16 @@ namespace Valve.VR.InteractionSystem
 					targetEnabled = false;
 				}
 			}
-		}
+            // After 0.5s weeble BANG!
+        }
 
 
 		//-------------------------------------------------
 		private IEnumerator FallDown()
 		{
-			if ( baseTransform )
+            Debug.Log("FallDown Occured");
+
+            if ( baseTransform )
 			{
 				Quaternion startingRot = baseTransform.rotation;
 
@@ -69,13 +82,15 @@ namespace Valve.VR.InteractionSystem
 
 				while ( rotLerp < 1 )
 				{
+                    Debug.Log("RotLerp");
 					rotLerp = Util.RemapNumberClamped( Time.time, startTime, startTime + fallTime, 0f, 1f );
 					baseTransform.rotation = Quaternion.Lerp( startingRot, fallenDownTransform.rotation, rotLerp );
 					yield return null;
 				}
 			}
-
-			yield return null;
+            // Give Score ++ 
+            Invoke("DestroyTarget", 3);
+            yield return null;
 		}
 	}
 }

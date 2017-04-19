@@ -15,6 +15,7 @@ public class MasterScore : MonoBehaviour {
         score = 0;
         numArrow = 0;
         numHit = 0;
+        timer = 180;
     }
 
     // Update is called once per frame
@@ -50,5 +51,10 @@ public class MasterScore : MonoBehaviour {
     public int getScore()
     {
         return this.score;
+    }
+
+    public int getTimer()
+    {
+        return this.timer;
     }
 }

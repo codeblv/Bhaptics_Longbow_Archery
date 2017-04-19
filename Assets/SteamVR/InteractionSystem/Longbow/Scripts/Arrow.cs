@@ -83,7 +83,7 @@ namespace Valve.VR.InteractionSystem
 			{
 				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject && hit.collider != Player.instance.headCollider )
 				{
-					// Destroy( gameObject );
+					Destroy( gameObject );
 					return;
 				}
 			}
@@ -94,7 +94,7 @@ namespace Valve.VR.InteractionSystem
 			prevHeadPosition = arrowHeadRB.transform.position;
 			prevVelocity = GetComponent<Rigidbody>().velocity;
 
-			//Destroy( gameObject, 30 );
+			Destroy( gameObject, 30 );
 		}
 
 
@@ -148,6 +148,7 @@ namespace Valve.VR.InteractionSystem
 				{
 					// Only count collisions with good speed so that arrows on the ground can't deal damage
 					// always pop balloons
+                    // HAVETOSEEINCH
 					if ( rbSpeed > 0.1f || hitBalloon )
 					{
 						collision.collider.gameObject.SendMessageUpwards( "ApplyDamage", SendMessageOptions.DontRequireReceiver );
