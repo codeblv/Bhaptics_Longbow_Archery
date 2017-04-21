@@ -16,6 +16,12 @@ namespace Valve.VR.InteractionSystem
 	//-------------------------------------------------------------------------
 	public class Player : MonoBehaviour
 	{
+        // Variables for Score System
+        private int score;
+        private int numArrow;
+        private int numHit;
+        private float accuracy;
+
 		[Tooltip( "Virtual transform corresponding to the meatspace tracking origin. Devices are tracked relative to this." )]
 		public Transform trackingOriginTransform;
 
@@ -268,6 +274,12 @@ namespace Valve.VR.InteractionSystem
 			{
 				trackingOriginTransform = this.transform;
 			}
+
+            // Initialize Score System
+            score = 0;
+            numArrow = 0;
+            accuracy = 0;
+            numHit = 0;
 		}
 
 
@@ -402,5 +414,24 @@ namespace Valve.VR.InteractionSystem
 		{
 			//Do something appropriate here
 		}
+
+
+        //--------------------------------------------------
+        // Methods for Score System - Inch
+        //--------------------------------------------------
+        public void scoreIncrease(int score_)
+        {
+            score = score + score_;
+        }
+
+        public void numArrowIncrease()
+        {
+            numArrow++;
+        }
+
+        public void updateAccuracy()
+        {
+            accuracy = score / numArrow * 100;
+        }
 	}
 }
