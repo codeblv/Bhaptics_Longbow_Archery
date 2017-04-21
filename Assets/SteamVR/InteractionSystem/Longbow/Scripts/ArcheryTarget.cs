@@ -21,11 +21,21 @@ namespace Valve.VR.InteractionSystem
 		public Transform baseTransform;
 		public Transform fallenDownTransform;
 		public float fallTime = 0.5f;
+        private Player player;
 
 		const float targetRadius = 0.25f;
 
 		private bool targetEnabled = true;
 
+
+        //
+        void Start() {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if(playerObj != null)
+            {
+                player = playerObj.GetComponent<Player>();
+            }
+        }
         //-------------------------------------------------
         private void ApplyDamage()
 		{
@@ -88,6 +98,7 @@ namespace Valve.VR.InteractionSystem
 					yield return null;
 				}
 			}
+            player.ScoreIncrease(1);
             // Give Score ++ 
             Invoke("DestroyTarget", 3);
             yield return null;

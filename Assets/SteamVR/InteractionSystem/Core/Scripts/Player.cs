@@ -17,10 +17,12 @@ namespace Valve.VR.InteractionSystem
 	public class Player : MonoBehaviour
 	{
         // Variables for Score System
-        private int score;
-        private int numArrow;
-        private int numHit;
-        private float accuracy;
+        public int score;
+        public int numArrow;
+        public int numHit;
+        public float accuracy;
+        public GUIText scoreBoard;
+        public GUIText accuracyBoard;
 
 		[Tooltip( "Virtual transform corresponding to the meatspace tracking origin. Devices are tracked relative to this." )]
 		public Transform trackingOriginTransform;
@@ -270,17 +272,39 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		void Awake()
 		{
-			if ( trackingOriginTransform == null )
-			{
-				trackingOriginTransform = this.transform;
-			}
+            if (trackingOriginTransform == null)
+            {
+                trackingOriginTransform = this.transform;
+            }
+		}
 
+        void Start()
+        {
             // Initialize Score System
             score = 0;
             numArrow = 0;
             accuracy = 0;
             numHit = 0;
-		}
+
+            GameObject scoreBoardObj = GameObject.Find("Score");
+            if (scoreBoardObj != null)
+            {
+                scoreBoard = scoreBoardObj.GetComponent<GUIText>();
+            }
+
+            GameObject accuracyBoardObj = GameObject.Find("Accuracy");
+            if (accuracyBoardObj != null)
+            {
+                accuracyBoard = accuracyBoardObj.GetComponent<GUIText>();
+            }
+
+            UpdateScore();
+            UpdateAccuracy();
+        }
+
+
+        //-------------------------------------------------
+ 
 
 
 		//-------------------------------------------------
@@ -419,19 +443,27 @@ namespace Valve.VR.InteractionSystem
         //--------------------------------------------------
         // Methods for Score System - Inch
         //--------------------------------------------------
-        public void scoreIncrease(int score_)
+        public void UpdateScore()
         {
-            score = score + score_;
+            scoreBoard.text = "Score: " + score.ToString();
         }
 
-        public void numArrowIncrease()
+        public void ScoreIncrease(int score_)
+        {
+            score += score_;
+            UpdateScore();
+        }
+
+        public void NumArrowIncrease()
         {
             numArrow++;
+            UpdateAccuracy();
         }
 
-        public void updateAccuracy()
+        public void UpdateAccuracy()
         {
-            accuracy = score / numArrow * 100;
+            accuracy = score / (numArrow + 1) * 100;
+            accuracyBoard.text = "Accuracy: " + accuracy.ToString();
         }
 	}
 }
