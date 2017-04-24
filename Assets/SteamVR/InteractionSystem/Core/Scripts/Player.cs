@@ -5,6 +5,7 @@
 //=============================================================================
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,8 +22,8 @@ namespace Valve.VR.InteractionSystem
         public int numArrow;
         public int numHit;
         public float accuracy;
-        public GUIText scoreBoard;
-        public GUIText accuracyBoard;
+        public Text scoreBoard;
+        public Text accuracyBoard;
 
 		[Tooltip( "Virtual transform corresponding to the meatspace tracking origin. Devices are tracked relative to this." )]
 		public Transform trackingOriginTransform;
@@ -276,11 +277,7 @@ namespace Valve.VR.InteractionSystem
             {
                 trackingOriginTransform = this.transform;
             }
-		}
 
-        void Start()
-        {
-            // Initialize Score System
             score = 0;
             numArrow = 0;
             accuracy = 0;
@@ -289,18 +286,20 @@ namespace Valve.VR.InteractionSystem
             GameObject scoreBoardObj = GameObject.Find("Score");
             if (scoreBoardObj != null)
             {
-                scoreBoard = scoreBoardObj.GetComponent<GUIText>();
+                scoreBoard = scoreBoardObj.GetComponent<Text>();
             }
 
             GameObject accuracyBoardObj = GameObject.Find("Accuracy");
             if (accuracyBoardObj != null)
             {
-                accuracyBoard = accuracyBoardObj.GetComponent<GUIText>();
+                accuracyBoard = accuracyBoardObj.GetComponent<Text>();
             }
 
             UpdateScore();
             UpdateAccuracy();
         }
+
+   
 
 
         //-------------------------------------------------
@@ -445,25 +444,25 @@ namespace Valve.VR.InteractionSystem
         //--------------------------------------------------
         public void UpdateScore()
         {
-            scoreBoard.text = "Score: " + score.ToString();
+            this.scoreBoard.text = "Score: " + this.score.ToString();
         }
 
         public void ScoreIncrease(int score_)
         {
-            score += score_;
-            UpdateScore();
+            this.score += score_;
+            this.UpdateScore();
         }
 
         public void NumArrowIncrease()
         {
-            numArrow++;
-            UpdateAccuracy();
+            this.numArrow++;
+            this.UpdateAccuracy();
         }
 
         public void UpdateAccuracy()
         {
-            accuracy = score / (numArrow + 1) * 100;
-            accuracyBoard.text = "Accuracy: " + accuracy.ToString();
+            this.accuracy = this.score / (this.numArrow + 1) * 100;
+            this.accuracyBoard.text = "Accuracy: " + this.accuracy.ToString();
         }
 	}
 }

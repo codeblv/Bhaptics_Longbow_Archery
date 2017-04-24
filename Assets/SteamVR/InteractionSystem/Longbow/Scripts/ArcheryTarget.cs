@@ -21,7 +21,7 @@ namespace Valve.VR.InteractionSystem
 		public Transform baseTransform;
 		public Transform fallenDownTransform;
 		public float fallTime = 0.5f;
-        private Player player;
+        public Player player;
 
 		const float targetRadius = 0.25f;
 
@@ -30,7 +30,7 @@ namespace Valve.VR.InteractionSystem
 
         //
         void Start() {
-            GameObject playerObj = GameObject.FindWithTag("Player");
+            GameObject playerObj = GameObject.Find("Player");
             if(playerObj != null)
             {
                 player = playerObj.GetComponent<Player>();
@@ -98,7 +98,7 @@ namespace Valve.VR.InteractionSystem
 					yield return null;
 				}
 			}
-            player.ScoreIncrease(1);
+            player.ScoreIncrease(3);
             // Give Score ++ 
             Invoke("DestroyTarget", 3);
             yield return null;
