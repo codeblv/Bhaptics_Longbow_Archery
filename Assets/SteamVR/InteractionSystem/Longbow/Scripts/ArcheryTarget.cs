@@ -97,7 +97,6 @@ namespace Valve.VR.InteractionSystem
 
 				while ( rotLerp < 1 )
 				{
-                    Debug.Log("RotLerp");
 					rotLerp = Util.RemapNumberClamped( Time.time, startTime, startTime + fallTime, 0f, 1f );
 					baseTransform.rotation = Quaternion.Lerp( startingRot, fallenDownTransform.rotation, rotLerp );
 					yield return null;
