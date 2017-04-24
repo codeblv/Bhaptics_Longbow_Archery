@@ -26,20 +26,21 @@ namespace Valve.VR.InteractionSystem
 		const float targetRadius = 0.25f;
 
 		private bool targetEnabled = true;
+        private float transNum;
 
 
-        //
+        //-------------------------------------------------
         void Start() {
             GameObject playerObj = GameObject.Find("Player");
             if(playerObj != null)
             {
                 player = playerObj.GetComponent<Player>();
             }
+            transNum = 0.0f;
         }
         //-------------------------------------------------
         private void ApplyDamage()
 		{
-            // Hit Point++;
 			OnDamageTaken();
             Debug.Log("ApplyDamage Occured");
 		}
@@ -61,9 +62,6 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private void OnDamageTaken()
 		{
-            // Score Point Calculation needed
-            Debug.Log("OnDamageTaken Occured");
-
             if ( targetEnabled )
 			{
 				onTakeDamage.Invoke();
@@ -74,15 +72,20 @@ namespace Valve.VR.InteractionSystem
 					targetEnabled = false;
 				}
 			}
-            // After 0.5s weeble BANG!
         }
 
+        //-------------------------------------------------
+        private IEnumerator BecomeTransparent()
+        {
+            for (transNum = 0.0f; transNum <= 1;; transNum += 0.05f){
+                GameObject.renderer.material.ChangeAlpha(transNum);
+                yield return null;
+            }
+        }
 
 		//-------------------------------------------------
 		private IEnumerator FallDown()
 		{
-            Debug.Log("FallDown Occured");
-
             if ( baseTransform )
 			{
 				Quaternion startingRot = baseTransform.rotation;
@@ -98,8 +101,9 @@ namespace Valve.VR.InteractionSystem
 					yield return null;
 				}
 			}
+            /* Need to add score giving system */
             player.ScoreIncrease(3);
-            // Give Score ++ 
+            StartCoroutine("BecomeTransparent");
             Invoke("DestroyTarget", 3);
             yield return null;
 		}
