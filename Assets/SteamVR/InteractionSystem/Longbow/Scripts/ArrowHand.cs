@@ -261,16 +261,16 @@ namespace Valve.VR.InteractionSystem
 		{
 			yield return new WaitForSeconds( 0.05f );
 
-			hand.otherHand.controller.TriggerHapticPulse( 1500 );
+			hand.otherHand.controller.TriggerHapticPulse( 3000 );
 			yield return new WaitForSeconds( 0.05f );
 
-			hand.otherHand.controller.TriggerHapticPulse( 800 );
+			hand.otherHand.controller.TriggerHapticPulse( 1600 );
 			yield return new WaitForSeconds( 0.05f );
 
-			hand.otherHand.controller.TriggerHapticPulse( 500 );
+			hand.otherHand.controller.TriggerHapticPulse( 1000 );
 			yield return new WaitForSeconds( 0.05f );
 
-			hand.otherHand.controller.TriggerHapticPulse( 300 );
+			hand.otherHand.controller.TriggerHapticPulse( 600 );
 		}
 
 

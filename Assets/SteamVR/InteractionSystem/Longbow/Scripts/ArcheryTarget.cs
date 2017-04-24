@@ -75,6 +75,7 @@ namespace Valve.VR.InteractionSystem
         }
 
         //-------------------------------------------------
+        /*
         private IEnumerator BecomeTransparent()
         {
             for (transNum = 0.0f; transNum <= 1;; transNum += 0.05f){
@@ -82,6 +83,7 @@ namespace Valve.VR.InteractionSystem
                 yield return null;
             }
         }
+        */
 
 		//-------------------------------------------------
 		private IEnumerator FallDown()
@@ -103,7 +105,7 @@ namespace Valve.VR.InteractionSystem
 			}
             /* Need to add score giving system */
             player.ScoreIncrease(3);
-            StartCoroutine("BecomeTransparent");
+            //StartCoroutine("BecomeTransparent");
             Invoke("DestroyTarget", 3);
             yield return null;
 		}
