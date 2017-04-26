@@ -18,10 +18,10 @@ namespace Valve.VR.InteractionSystem
 	public class Player : MonoBehaviour
 	{
         // Variables for Score System
-        public int score;
-        public int numArrow;
-        public int numHit;
-        public float accuracy;
+        private int score;
+        private int numArrow;
+        private int numHit;
+        private float accuracy;
         public Text scoreBoard;
         public Text accuracyBoard;
 
@@ -444,25 +444,38 @@ namespace Valve.VR.InteractionSystem
         //--------------------------------------------------
         public void UpdateScore()
         {
-            this.scoreBoard.text = "Score: " + this.score.ToString();
+            scoreBoard.text = "Score: " + score.ToString();
         }
 
         public void ScoreIncrease(int score_)
         {
-            this.score += score_;
-            this.UpdateScore();
+            score += score_;
+            UpdateScore();
         }
 
         public void NumArrowIncrease()
         {
-            this.numArrow++;
-            this.UpdateAccuracy();
+            numArrow++;
+            UpdateAccuracy();
         }
 
         public void UpdateAccuracy()
         {
-            this.accuracy = this.score / (this.numArrow + 1) * 100;
-            this.accuracyBoard.text = "Accuracy: " + this.accuracy.ToString();
+            if (numArrow == 0)
+            {
+                accuracy = 0f;
+            }
+            else
+            {
+                accuracy = ((float)numHit / (float)numArrow) * 100f;
+            }
+            accuracyBoard.text = "Accuracy: " + accuracy.ToString() +"%";
+        }
+
+        public void NumHitIncrease()
+        {
+            numHit++;
+            UpdateAccuracy();
         }
 	}
 }

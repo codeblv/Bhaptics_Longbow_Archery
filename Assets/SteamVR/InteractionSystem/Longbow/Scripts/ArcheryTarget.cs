@@ -42,6 +42,7 @@ namespace Valve.VR.InteractionSystem
         private void ApplyDamage()
 		{
 			OnDamageTaken();
+            player.NumHitIncrease();
             Debug.Log("ApplyDamage Occured");
 		}
 
@@ -53,14 +54,7 @@ namespace Valve.VR.InteractionSystem
 		}
 
         //-------------------------------------------------
-        private void DestroyTarget()
-        {
-            Destroy(gameObject);
-        }
-
-
-		//-------------------------------------------------
-		private void OnDamageTaken()
+    	private void OnDamageTaken()
 		{
             if ( targetEnabled )
 			{
@@ -88,6 +82,7 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private IEnumerator FallDown()
 		{
+            targetEnabled = false;
             if ( baseTransform )
 			{
 				Quaternion startingRot = baseTransform.rotation;
@@ -105,7 +100,7 @@ namespace Valve.VR.InteractionSystem
             /* Need to add score giving system */
             player.ScoreIncrease(3);
             //StartCoroutine("BecomeTransparent");
-            Invoke("DestroyTarget", 3);
+            Destroy(gameObject, 3.0f);
             yield return null;
 		}
 	}

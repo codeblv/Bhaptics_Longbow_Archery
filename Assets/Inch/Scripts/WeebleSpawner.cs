@@ -16,7 +16,7 @@ public class WeebleSpawner : MonoBehaviour {
         {
             player = playerObj;
         }
-        InvokeRepeating("SpawnWeebles", spawnTime, spawnTime); 
+        InvokeRepeating("SpawnWeebles", spawnTime, 3.0f); 
 	}
 	
 	// Update is called once per frame

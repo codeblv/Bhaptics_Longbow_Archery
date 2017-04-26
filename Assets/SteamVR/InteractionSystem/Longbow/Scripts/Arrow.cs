@@ -257,7 +257,7 @@ namespace Valve.VR.InteractionSystem
 		{
 			if ( scaleParentObject != null )
 			{
-				// Destroy( scaleParentObject );
+				Destroy( scaleParentObject );
 			}
 		}
 	}

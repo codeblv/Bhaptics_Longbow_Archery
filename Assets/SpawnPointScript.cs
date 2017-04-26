@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetTransParent : MonoBehaviour {
-    public GameObject gameObj;
+public class SpawnPointScript : MonoBehaviour {
+    private bool haveTarget;
 
 	// Use this for initialization
 	void Start () {
-        
+        haveTarget = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public bool HaveTarget()
+    {
+        return haveTarget;
+    }
 }

@@ -19,6 +19,7 @@ namespace Valve.VR.InteractionSystem
 
 		private GameObject currentArrow;
 		public GameObject arrowPrefab;
+        private Player player;
 
 		public Transform arrowNockTransform;
 
@@ -49,6 +50,12 @@ namespace Valve.VR.InteractionSystem
 			allowTeleport.overrideHoverLock = false;
 
 			arrowList = new List<GameObject>();
+
+            Player playerObj = GameObject.Find("Player").GetComponent<Player>();
+            if(playerObj != null)
+            {
+                player = playerObj;
+            }
 		}
 
 
@@ -232,8 +239,8 @@ namespace Valve.VR.InteractionSystem
 			arrow.arrowHeadRB.useGravity = true;
 			arrow.arrowHeadRB.transform.GetComponent<BoxCollider>().enabled = true;
 
-			arrow.arrowHeadRB.AddForce( currentArrow.transform.forward * bow.GetArrowVelocity() * 3 , ForceMode.VelocityChange );
-			arrow.arrowHeadRB.AddTorque( currentArrow.transform.forward * 10 );
+			arrow.arrowHeadRB.AddForce( currentArrow.transform.forward * bow.GetArrowVelocity() * 2 , ForceMode.VelocityChange );
+			arrow.arrowHeadRB.AddTorque( currentArrow.transform.forward * 2 );
 
 			nocked = false;
 
@@ -242,6 +249,7 @@ namespace Valve.VR.InteractionSystem
 
 			allowArrowSpawn = false;
 			Invoke( "EnableArrowSpawn", 0.5f );
+            player.NumArrowIncrease();
 			StartCoroutine( ArrowReleaseHaptics() );
 
 			currentArrow = null;
