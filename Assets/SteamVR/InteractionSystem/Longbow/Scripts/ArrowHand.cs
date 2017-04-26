@@ -41,6 +41,8 @@ namespace Valve.VR.InteractionSystem
 		public int maxArrowCount = 10;
 		private List<GameObject> arrowList;
 
+        private GameObject tactosyPlayer;
+
 
 		//-------------------------------------------------
 		void Awake()
@@ -55,6 +57,11 @@ namespace Valve.VR.InteractionSystem
             if(playerObj != null)
             {
                 player = playerObj;
+            }
+            GameObject tactosyObj = GameObject.Find("[Tactosy]");
+            if(tactosyObj != null)
+            {
+                tactosyPlayer = tactosyObj;
             }
 		}
 
@@ -267,7 +274,8 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private IEnumerator ArrowReleaseHaptics()
 		{
-			yield return new WaitForSeconds( 0.05f );
+            tactosyPlayer.SendMessage("ArrowRelease");
+            yield return new WaitForSeconds( 0.05f );
 
 			hand.otherHand.controller.TriggerHapticPulse( 3000 );
 			yield return new WaitForSeconds( 0.05f );
@@ -278,7 +286,7 @@ namespace Valve.VR.InteractionSystem
 			hand.otherHand.controller.TriggerHapticPulse( 1000 );
 			yield return new WaitForSeconds( 0.05f );
 
-			hand.otherHand.controller.TriggerHapticPulse( 600 );
+            hand.otherHand.controller.TriggerHapticPulse( 600 );
 		}
 
 

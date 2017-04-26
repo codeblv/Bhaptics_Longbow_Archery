@@ -62,6 +62,11 @@ namespace Tactosy.Unity
             }
         }
 
+        void ArrowRelease()
+        {
+            TactosyPlayer.SendSignal("ArrowRelease");
+        }
+
         void OnApplicationPause(bool pauseState)
         {
             if (pauseState)
