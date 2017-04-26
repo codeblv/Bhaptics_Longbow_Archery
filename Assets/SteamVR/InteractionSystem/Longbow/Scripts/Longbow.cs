@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Tactosy;
 
 namespace Valve.VR.InteractionSystem
 {
@@ -33,6 +34,8 @@ namespace Valve.VR.InteractionSystem
 		public bool autoSpawnArrowHand = true;
 		public ItemPackage arrowHandItemPackage;
 		public GameObject arrowHandPrefab;
+        //private Tactosy.Unity.Manager_Tactosy tactosyPlayer;
+        private GameObject tactosyPlayer;
 
 		public bool nocked;
 		public bool pulled;
@@ -91,6 +94,18 @@ namespace Valve.VR.InteractionSystem
 		void Awake()
 		{
 			newPosesAppliedAction = SteamVR_Events.NewPosesAppliedAction( OnNewPosesApplied );
+            /*
+            Tactosy.Unity.Manager_Tactosy tactosyObj = GameObject.Find("[Tactosy]").GetComponent<Tactosy.Unity.Manager_Tactosy>();
+            if(tactosyObj != null)
+            {
+                tactosyPlayer = tactosyObj;
+            }
+            */
+            GameObject tactosyObj = GameObject.Find("[Tactosy]");
+            if(tactosyObj != null)
+            {
+                tactosyPlayer = tactosyObj;
+            }
         }
 
 
@@ -188,20 +203,29 @@ namespace Valve.VR.InteractionSystem
 						pulled = false;
 					}
 
-					if ( ( nockDistanceTravelled > ( lastTickDistance + hapticDistanceThreshold ) ) || nockDistanceTravelled < ( lastTickDistance - hapticDistanceThreshold ) )
+                    float ratio = nockDistanceTravelled * 2.0f;
+                    if (ratio > 1)
+                    {
+                        ratio = 1.0f;
+                    }
+                    Debug.Log("Ratio = " + ratio);
+                    //tactosyPlayer.TactosyPlayer.SendSignal("ldraw", ratio);
+                    //tactosyPlayer.TactosyPlayer.SendSignal("rdraw", ratio);
+                    tactosyPlayer.SendMessage("BowTensionHaptic", ratio);
+                   
+                    lastTickDistance = nockDistanceTravelled;
+                    if ( ( nockDistanceTravelled > ( lastTickDistance + hapticDistanceThreshold ) ) || nockDistanceTravelled < ( lastTickDistance - hapticDistanceThreshold ) )
 					{
 						ushort hapticStrength = (ushort)Util.RemapNumber( nockDistanceTravelled, 0, maxPull, bowPullPulseStrengthLow, bowPullPulseStrengthHigh );
-						hand.controller.TriggerHapticPulse( (ushort)(hapticStrength * 2) );
-						hand.otherHand.controller.TriggerHapticPulse( (ushort)(hapticStrength * 2));
-
-						drawSound.PlayBowTensionClicks( drawTension );
-
-						lastTickDistance = nockDistanceTravelled;
-					}
+						hand.controller.TriggerHapticPulse( hapticStrength );
+						hand.otherHand.controller.TriggerHapticPulse( hapticStrength );
+                        drawSound.PlayBowTensionClicks(drawTension);
+                    }
 
 					if ( nockDistanceTravelled >= maxPull )
 					{
-						if ( Time.time > nextStrainTick )
+                        tactosyPlayer.SendMessage("BowTensionHaptic", 0.9f);
+                        if ( Time.time > nextStrainTick )
 						{
 							hand.controller.TriggerHapticPulse( 800 );
 							hand.otherHand.controller.TriggerHapticPulse( 800 );
@@ -211,6 +235,9 @@ namespace Valve.VR.InteractionSystem
 							nextStrainTick = Time.time + Random.Range( minStrainTickTime, maxStrainTickTime );
 						}
 					}
+
+
+
 				}
 				else
 				{

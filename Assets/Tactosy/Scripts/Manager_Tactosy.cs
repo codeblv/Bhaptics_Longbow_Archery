@@ -67,6 +67,13 @@ namespace Tactosy.Unity
             TactosyPlayer.SendSignal("ArrowRelease");
         }
 
+        void BowTensionHaptic(float ratio)
+        {
+            Debug.Log("BowTensionHaptic Called with ratio(" + ratio + ")");
+            TactosyPlayer.SendSignal("ldraw", ratio);
+            TactosyPlayer.SendSignal("rdraw", ratio);
+        }
+
         void OnApplicationPause(bool pauseState)
         {
             if (pauseState)
