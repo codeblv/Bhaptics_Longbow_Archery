@@ -69,9 +69,33 @@ namespace Tactosy.Unity
 
         void BowTensionHaptic(float ratio)
         {
-            Debug.Log("BowTensionHaptic Called with ratio(" + ratio + ")");
             TactosyPlayer.SendSignal("ldraw", ratio);
             TactosyPlayer.SendSignal("rdraw", ratio);
+        }
+
+        void RightHandDraw(float ratio)
+        {
+            List<Point> pathPoints = new List<Point>
+            {
+                new Point(ratio, ratio, 0.5f + (ratio/2))
+            };
+            TactosyPlayer.SendSignal("RightHandDraw", PositionType.Right, pathPoints, 20);
+            Debug.Log("RightHandDraw is Successfully called with ratio(" + ratio + ")");
+        }
+
+        void LeftHandDraw(float ratio)
+        {
+            List<Point> pathPoints = new List<Point>
+            {
+                new Point(0.0f, (1f - ratio)/3f, ratio),
+                new Point(0.2f, (1f - ratio)/3f, ratio),
+                new Point(0.4f, (1f - ratio)/3f, ratio),
+                new Point(0.6f, (1f - ratio)/3f, ratio),
+                new Point(0.8f, (1f - ratio)/3f, ratio),
+                new Point(1.0f, (1f - ratio)/3f, ratio)
+            };
+            TactosyPlayer.SendSignal("LeftHandDraw", PositionType.Left, pathPoints, 20);
+            Debug.Log("LefttHandDraw is Successfully called with ratio(" + ratio + ")");
         }
 
         void OnApplicationPause(bool pauseState)

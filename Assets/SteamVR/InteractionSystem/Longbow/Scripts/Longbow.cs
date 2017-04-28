@@ -208,11 +208,10 @@ namespace Valve.VR.InteractionSystem
                     {
                         ratio = 1.0f;
                     }
-                    Debug.Log("Ratio = " + ratio);
-                    //tactosyPlayer.TactosyPlayer.SendSignal("ldraw", ratio);
-                    //tactosyPlayer.TactosyPlayer.SendSignal("rdraw", ratio);
-                    tactosyPlayer.SendMessage("BowTensionHaptic", ratio);
-                   
+                    tactosyPlayer.SendMessage("RightHandDraw", ratio);
+                    tactosyPlayer.SendMessage("LeftHandDraw", ratio);
+                    //tactosyPlayer.SendMessage("BowTensionHaptic", ratio);
+
                     lastTickDistance = nockDistanceTravelled;
                     if ( ( nockDistanceTravelled > ( lastTickDistance + hapticDistanceThreshold ) ) || nockDistanceTravelled < ( lastTickDistance - hapticDistanceThreshold ) )
 					{
@@ -224,7 +223,9 @@ namespace Valve.VR.InteractionSystem
 
 					if ( nockDistanceTravelled >= maxPull )
 					{
-                        tactosyPlayer.SendMessage("BowTensionHaptic", 0.9f);
+                        //tactosyPlayer.SendMessage("BowTensionHaptic", 0.9f);
+                        tactosyPlayer.SendMessage("RightHandDraw", 0.98f);
+                        tactosyPlayer.SendMessage("LeftHandDraw", 0.98f);
                         if ( Time.time > nextStrainTick )
 						{
 							hand.controller.TriggerHapticPulse( 800 );
