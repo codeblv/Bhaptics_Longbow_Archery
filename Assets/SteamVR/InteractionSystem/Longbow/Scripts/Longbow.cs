@@ -405,6 +405,7 @@ namespace Valve.VR.InteractionSystem
 		public void ArrowInPosition()
 		{
 			DoHandednessCheck();
+            tactosyPlayer.SendMessage("NockHaptic");
 
 			if ( nockSound != null )
 			{

@@ -13,21 +13,16 @@ namespace Valve.VR.InteractionSystem
 	//-------------------------------------------------------------------------
 	public class ArcheryTarget : MonoBehaviour
 	{
-		public UnityEvent onTakeDamage;
-
-		public bool onceOnly = false;
-		public Transform targetCenter;
-
+        public UnityEvent onTakeDamage;
+        public Transform targetCenter;
 		public Transform baseTransform;
 		public Transform fallenDownTransform;
 		public float fallTime = 0.5f;
-        public Player player;
-
+        
+        private Player player;
 		const float targetRadius = 0.25f;
-
-		private bool targetEnabled = true;
-        private float transNum;
-
+        private bool onceOnly = true;
+        private bool targetEnabled = true;
 
         //-------------------------------------------------
         void Start() {
@@ -36,14 +31,13 @@ namespace Valve.VR.InteractionSystem
             {
                 player = playerObj.GetComponent<Player>();
             }
-            transNum = 0.0f;
         }
+        
         //-------------------------------------------------
         private void ApplyDamage()
 		{
 			OnDamageTaken();
-            player.NumHitIncrease();
-            Debug.Log("ApplyDamage Occured");
+            player.SendMessage("NumHitIncrease");
 		}
 
 
@@ -68,17 +62,6 @@ namespace Valve.VR.InteractionSystem
 			}
         }
 
-        //-------------------------------------------------
-        /*
-        private IEnumerator BecomeTransparent()
-        {
-            for (transNum = 0.0f; transNum <= 1;; transNum += 0.05f){
-                GameObject.renderer.material.ChangeAlpha(transNum);
-                yield return null;
-            }
-        }
-        */
-
 		//-------------------------------------------------
 		private IEnumerator FallDown()
 		{
@@ -99,9 +82,7 @@ namespace Valve.VR.InteractionSystem
 			}
             /* Need to add score giving system */
             player.ScoreIncrease(3);
-            //StartCoroutine("BecomeTransparent");
             Destroy(gameObject, 3.0f);
-            yield return null;
 		}
 	}
 }

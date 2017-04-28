@@ -235,7 +235,8 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		private void FireArrow()
 		{
-			currentArrow.transform.parent = null;
+            player.SendMessage("NumArrowIncrease");
+            currentArrow.transform.parent = null;
 
 			Arrow arrow = currentArrow.GetComponent<Arrow>();
 			arrow.shaftRB.isKinematic = false;
@@ -256,7 +257,6 @@ namespace Valve.VR.InteractionSystem
 
 			allowArrowSpawn = false;
 			Invoke( "EnableArrowSpawn", 0.5f );
-            player.NumArrowIncrease();
 			StartCoroutine( ArrowReleaseHaptics() );
 
 			currentArrow = null;

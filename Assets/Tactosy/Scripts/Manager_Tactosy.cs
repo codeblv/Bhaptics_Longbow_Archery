@@ -61,18 +61,14 @@ namespace Tactosy.Unity
                 TactosyPlayer.SendSignal("Fireball", 0.2f);
             }
         }
-
+        
+        // Haptic Feedback 1: Arrow Release
         void ArrowRelease()
         {
             TactosyPlayer.SendSignal("ArrowRelease");
         }
 
-        void BowTensionHaptic(float ratio)
-        {
-            TactosyPlayer.SendSignal("ldraw", ratio);
-            TactosyPlayer.SendSignal("rdraw", ratio);
-        }
-
+        // Haptic Feedback 2: String draw haptic for right hand
         void RightHandDraw(float ratio)
         {
             List<Point> pathPoints = new List<Point>
@@ -80,9 +76,9 @@ namespace Tactosy.Unity
                 new Point(ratio, ratio, 0.5f + (ratio/2))
             };
             TactosyPlayer.SendSignal("RightHandDraw", PositionType.Right, pathPoints, 20);
-            Debug.Log("RightHandDraw is Successfully called with ratio(" + ratio + ")");
         }
 
+        // Haptic Feedback 3: String draw haptic for left hand
         void LeftHandDraw(float ratio)
         {
             List<Point> pathPoints = new List<Point>
@@ -95,7 +91,77 @@ namespace Tactosy.Unity
                 new Point(1.0f, (1f - ratio)/3f, ratio)
             };
             TactosyPlayer.SendSignal("LeftHandDraw", PositionType.Left, pathPoints, 20);
-            Debug.Log("LefttHandDraw is Successfully called with ratio(" + ratio + ")");
+        }
+
+        // Haptic Feedback Definition for Feedback 4 & 5
+        private void GrabHaptic1()
+        {
+            List<Point> pathPoints = new List<Point>
+            {
+                new Point(0.0f, 0.0f, 1),
+                new Point(1.0f, 0.0f, 1),
+                new Point(0.0f, 1.0f, 1),
+                new Point(1.0f, 1.0f, 1)
+            };
+            TactosyPlayer.SendSignal("BowPickUp", PositionType.Left, pathPoints, 100);
+        }
+        private void GrabHaptic2()
+        {
+            List<Point> pathPoints = new List<Point>
+            {
+                new Point(0.25f, 0.25f, 1),
+                new Point(0.75f, 0.25f, 1),
+                new Point(0.25f, 0.75f, 1),
+                new Point(0.75f, 0.75f, 1)
+            };
+            TactosyPlayer.SendSignal("BowPickUp", PositionType.Left, pathPoints, 100);
+        }
+        private void GrabHaptic3()
+        {
+            List<Point> pathPoints = new List<Point>
+            {
+                new Point(0.45f, 0.45f, 1),
+                new Point(0.55f, 0.45f, 1),
+                new Point(0.45f, 0.55f, 1),
+                new Point(0.55f, 0.55f, 1)
+            };
+            TactosyPlayer.SendSignal("BowPickUp", PositionType.Left, pathPoints, 100);
+        }
+
+        // Haptic Feedback 4: Pickup a bow from the back
+        public void PickUpBow()
+        {
+            GrabHaptic1();
+            Invoke("GrabHaptic2", 0.1f);
+            Invoke("GrabHaptic3", 0.2f);
+        }
+
+        // Haptic Feedback 5: Drop the bow
+        public void DropBow()
+        {
+            GrabHaptic3();
+            Invoke("GrabHaptic2", 0.1f);
+            Invoke("GrabHaptic1", 0.2f);
+        }
+
+        // Haptic Feedback 6: Nock Haptic
+        public void NockHaptic()
+        {
+            List<Point> leftPathPoints = new List<Point>
+            {
+                new Point(1f, 0f, 1),
+                new Point(0.85f, 0f, 1),
+                new Point(0.75f, 0f, 1)
+            };
+
+            List<Point> rightPathPoints = new List<Point>
+            {
+                new Point(0f, 0f, 1),
+                new Point(0f, 0.18f, 1),
+                new Point(0f, 0.36f, 1)
+            };
+            TactosyPlayer.SendSignal("NockHaptic", PositionType.Left, leftPathPoints, 100);
+            TactosyPlayer.SendSignal("NockHaptic", PositionType.Right, rightPathPoints, 100);
         }
 
         void OnApplicationPause(bool pauseState)

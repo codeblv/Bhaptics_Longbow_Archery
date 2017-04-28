@@ -280,7 +280,7 @@ namespace Valve.VR.InteractionSystem
 
             score = 0;
             numArrow = 0;
-            accuracy = 0;
+            accuracy = 0f;
             numHit = 0;
 
             GameObject scoreBoardObj = GameObject.Find("Score");
@@ -451,6 +451,7 @@ namespace Valve.VR.InteractionSystem
         {
             score += score_;
             UpdateScore();
+            UpdateAccuracy();
         }
 
         public void NumArrowIncrease()
@@ -469,7 +470,15 @@ namespace Valve.VR.InteractionSystem
             {
                 accuracy = ((float)numHit / (float)numArrow) * 100f;
             }
-            accuracyBoard.text = "Accuracy: " + accuracy.ToString() +"%";
+
+            if (accuracy.ToString().Length > 5)
+            {
+                accuracyBoard.text = "Accuracy: " + accuracy.ToString().Substring(0, 5) + "%";
+            }
+            else
+            {
+                accuracyBoard.text = "Accuracy: " + accuracy.ToString() + "%";
+            }
         }
 
         public void NumHitIncrease()
