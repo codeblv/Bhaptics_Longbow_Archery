@@ -37,7 +37,6 @@ namespace Valve.VR.InteractionSystem
         private void ApplyDamage()
 		{
 			OnDamageTaken();
-            player.SendMessage("NumHitIncrease");
 		}
 
 
@@ -52,7 +51,6 @@ namespace Valve.VR.InteractionSystem
 		{
             if ( targetEnabled )
 			{
-				onTakeDamage.Invoke();
 				StartCoroutine( this.FallDown() );
 
 				if ( onceOnly )
@@ -82,6 +80,8 @@ namespace Valve.VR.InteractionSystem
 			}
             /* Need to add score giving system */
             player.ScoreIncrease(5);
+            player.SendMessage("NumHitIncrease");
+            onTakeDamage.Invoke();
             gameObject.GetComponentInChildren<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
             Destroy(gameObject, 3.0f);
 		}
