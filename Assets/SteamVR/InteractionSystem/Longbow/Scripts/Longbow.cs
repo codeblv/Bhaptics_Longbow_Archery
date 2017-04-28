@@ -341,8 +341,9 @@ namespace Valve.VR.InteractionSystem
 
 			if ( handType == Hand.HandType.Left )// Bow hand is further left than arrow hand.
 			{
-				// We were considering a switch, but the current controller orientation matches our currently assigned handedness, so no longer consider a switch
-				if ( possibleHandSwitch && currentHandGuess == Handedness.Left )
+                tactosyPlayer.SendMessage("SetHandLeft");
+                // We were considering a switch, but the current controller orientation matches our currently assigned handedness, so no longer consider a switch
+                if ( possibleHandSwitch && currentHandGuess == Handedness.Left )
 				{
 					possibleHandSwitch = false;
 				}
@@ -352,21 +353,22 @@ namespace Valve.VR.InteractionSystem
 				{
 					possibleHandSwitch = true;
 					timeOfPossibleHandSwitch = Time.time;
-				}
+                }
 
 				// If we are considering a handedness switch, and it's been this way long enough, switch
 				if ( possibleHandSwitch && Time.time > ( timeOfPossibleHandSwitch + timeBeforeConfirmingHandSwitch ) )
 				{
 					currentHandGuess = Handedness.Left;
-					possibleHandSwitch = false;
+                    possibleHandSwitch = false;
 				}
 			}
 			else // Bow hand is further right than arrow hand
 			{
-				// We were considering a switch, but the current controller orientation matches our currently assigned handedness, so no longer consider a switch
-				if ( possibleHandSwitch && currentHandGuess == Handedness.Right )
+                tactosyPlayer.SendMessage("SetHandRight");
+                // We were considering a switch, but the current controller orientation matches our currently assigned handedness, so no longer consider a switch
+                if ( possibleHandSwitch && currentHandGuess == Handedness.Right )
 				{
-					possibleHandSwitch = false;
+                    possibleHandSwitch = false;
 				}
 
 				// If we previously thought the bow was right-handed, and were not already considering switching, start considering a switch

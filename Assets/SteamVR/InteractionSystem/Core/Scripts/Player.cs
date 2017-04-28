@@ -277,7 +277,6 @@ namespace Valve.VR.InteractionSystem
             {
                 trackingOriginTransform = this.transform;
             }
-
             score = 0;
             numArrow = 0;
             accuracy = 0f;
@@ -298,13 +297,6 @@ namespace Valve.VR.InteractionSystem
             UpdateScore();
             UpdateAccuracy();
         }
-
-   
-
-
-        //-------------------------------------------------
- 
-
 
 		//-------------------------------------------------
 		void OnEnable()

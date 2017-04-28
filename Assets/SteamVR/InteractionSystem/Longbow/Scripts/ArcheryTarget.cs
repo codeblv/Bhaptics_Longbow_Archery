@@ -81,7 +81,8 @@ namespace Valve.VR.InteractionSystem
 				}
 			}
             /* Need to add score giving system */
-            player.ScoreIncrease(3);
+            player.ScoreIncrease(5);
+            gameObject.GetComponentInChildren<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
             Destroy(gameObject, 3.0f);
 		}
 	}
