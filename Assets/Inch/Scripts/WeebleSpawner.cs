@@ -27,6 +27,14 @@ public class WeebleSpawner : MonoBehaviour {
         // Start to spawn
         InvokeRepeating("SpawnWeebles", spawnTime, 3.0f); 
 	}
+
+    void Update()
+    {
+        if(numWeeble == 0)
+        {
+            Invoke("SpawnWeebles", 0f);
+        }
+    }
     
     // Spawn ArcheryWeebles in random spawn points
     private void SpawnWeebles()
